@@ -10,27 +10,11 @@ const questionsRouter = require('./routes/questions');
 
 const app = express();
 
-const corsOptions = {
-  origin(origin, callback) {
-    // Requests from Postman, curl, mobile apps, and server-to-server calls
-    // usually do not include an Origin header.
-    if (!origin) {
-      return callback(null, true);
-    }
-
-    const normalizedOrigin = origin.replace(/\/$/, '');
-
-    if (config.allowedOrigins.includes(normalizedOrigin)) {
-      return callback(null, true);
-    }
-
-    const error = new Error(`Origin ${origin} is not allowed by CORS`);
-    error.status = 403;
-    return callback(error);
-  },
-  methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization']
-};
+app.use(cors({
+    origin: 'https://sdn302-project-fe.vercel.app', // Điền đúng URL Frontend của bạn (không có dấu / ở cuối)
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // Đảm bảo cho phép method OPTIONS
+    credentials: true // Bật cái này nếu API của bạn có lưu cookie/token
+}));
 
 app.use(cors(corsOptions));
 app.use(express.json());
