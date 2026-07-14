@@ -2,13 +2,14 @@ const app = require('../src/app');
 const { connectToDatabase } = require('../src/db');
 
 module.exports = async (req, res) => {
-  if (req.url === '/api/health' || req.url === '/health') {
-    return res.status(200).json({
-      success: true,
-      message: 'API is healthy'
+  try {
+    await connectToDatabase();
+    return app(req, res);
+  } catch (error) {
+    console.error('Database connection failed:', error);
+    return res.status(500).json({
+      success: false,
+      message: 'Database connection failed'
     });
   }
-
-//   await connectToDatabase();
-  return app(req, res);
 };
