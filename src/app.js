@@ -11,12 +11,14 @@ const questionsRouter = require('./routes/questions');
 const app = express();
 
 app.use(cors({
-    origin: 'https://sdn302-project-fe.vercel.app', // Điền đúng URL Frontend của bạn (không có dấu / ở cuối)
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // Đảm bảo cho phép method OPTIONS
-    credentials: true // Bật cái này nếu API của bạn có lưu cookie/token
+  origin: [
+    'http://localhost:5173',
+    'https://sdn302-project-fe.vercel.app'
+  ],
+  methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
 }));
 
-app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
