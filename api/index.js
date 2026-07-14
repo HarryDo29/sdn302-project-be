@@ -9,6 +9,6 @@ module.exports = async (req, res) => {
     });
   }
 
-  await connectToDatabase();
+//   await connectToDatabase();
   return app(req, res);
 };

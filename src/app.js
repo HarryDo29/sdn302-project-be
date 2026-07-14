@@ -42,7 +42,7 @@ app.use((err, req, res, next) => {
 });
 
 async function start() {
-  // await connectToDatabase();
+  await connectToDatabase();
   app.listen(config.port, () => {
     console.log(`Server running at http://localhost:${config.port}`);
   });
