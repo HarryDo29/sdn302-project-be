@@ -25,12 +25,16 @@ async function connectToDatabase() {
   }
 
   if (!globalForMongoose.__quizAppMongo.promise) {
-    globalForMongoose.__quizAppMongo.promise = mongoose.connect(config.mongoUrl);
+    globalForMongoose.__quizAppMongo.promise = mongoose.connect(config.mongoUrl, {
+      serverSelectionTimeoutMS: 5000,
+      connectTimeoutMS: 5000
+    });
   }
 
   await globalForMongoose.__quizAppMongo.promise;
   globalForMongoose.__quizAppMongo.conn = mongoose.connection;
 
+  console.log('Connected to MongoDB');s
   return globalForMongoose.__quizAppMongo.conn;
 }
 
