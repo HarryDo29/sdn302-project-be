@@ -10,7 +10,35 @@ const questionsRouter = require('./routes/questions');
 
 const app = express();
 
-app.use(cors());
+const allowedOrigins = [
+  'http://localhost:5173',
+  process.env.CLIENT_URL
+].filter(Boolean);
+
+
+const corsOptions = {
+  origin(origin, callback) {
+    // Requests from Postman, curl, mobile apps, and server-to-server calls
+    // usually do not include an Origin header.
+    if (!origin) {
+      return callback(null, true);
+    }
+
+    const normalizedOrigin = origin.replace(/\/$/, '');
+
+    if (config.allowedOrigins.includes(normalizedOrigin)) {
+      return callback(null, true);
+    }
+
+    const error = new Error(`Origin ${origin} is not allowed by CORS`);
+    error.status = 403;
+    return callback(error);
+  },
+  methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+};
+
+app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
