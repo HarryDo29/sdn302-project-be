@@ -34,7 +34,6 @@ async function connectToDatabase() {
   await globalForMongoose.__quizAppMongo.promise;
   globalForMongoose.__quizAppMongo.conn = mongoose.connection;
 
-  console.log('Connected to MongoDB');
   return globalForMongoose.__quizAppMongo.conn;
 }
 
