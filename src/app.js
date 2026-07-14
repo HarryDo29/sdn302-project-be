@@ -12,7 +12,7 @@ const app = express();
 
 const allowedOrigins = [
   'http://localhost:5173',
-  process.env.CLIENT_URL
+  'https://sdn302-project-fe.vercel.app'
 ].filter(Boolean);
 
 
